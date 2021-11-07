@@ -70,7 +70,7 @@ router.post("/loginEtudiant", async (req, res) => {
           { _etudiant },
           process.env.TOKEN_KEY,
           {
-            expiresIn: "2h",
+            expiresIn: "48h",
           }
         );
   
