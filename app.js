@@ -3,6 +3,7 @@ require("./config/database").connect();
 
 const express = require('express');
 
+const path = require("path");
 const morgan = require('morgan');
 
 const fileUpload = require('express-fileupload');
@@ -33,7 +34,9 @@ app.use(express.urlencoded({extended: true}));
 
 
 //       STATIC FILES
-app.use(express.static('./files'));
+// FILES THAT WE WANT TO GET FROM BACKEND SERVER
+app.use(express.static('files'));
+app.use('/images', express.static(path.join(__dirname, 'files')))
 
 //     LOGS
 app.use(morgan('dev'));

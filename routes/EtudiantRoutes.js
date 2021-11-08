@@ -12,9 +12,9 @@ const router =express.Router();
 
 //  GET ETUDIANTS
 // JSON
-// AUTHENTIFICATION NEEDED
+// AUTHENTIFICATION NOT NEEDED
 
-router.get('/etudiants',auth,(req,res) => {
+router.get('/etudiants',(req,res) => {
     
     Etudiant.find()
     .then((result) => {
@@ -27,6 +27,7 @@ router.get('/etudiants',auth,(req,res) => {
 
 // GET ETUDIANT BY ID
 // JSON
+// AUTHENTIFICATION NEEDED
 
 router.get('/etudiant/:id',auth,(req,res) => {
     const id = req.params.id
@@ -43,7 +44,6 @@ router.get('/etudiant/:id',auth,(req,res) => {
 
 // LOGIN ETUDIANT
 // JSON
-// AUTHENTIFICATION NOT NEEDED
 
 router.post("/loginEtudiant", async (req, res) => {
     try {
@@ -119,7 +119,7 @@ router.post('/registerEtudiant',async (req,res) => {
             
             //Use the mv() method to place the file in upload directory (i.e. "uploads")
             pdp.mv('./files/' + pdp.name);
-            et.photo=path.resolve('./files/' + pdp.name);
+            et.photo='http://localhost:3000/images/' + pdp.name;
         }
 
         console.log(et);
@@ -166,7 +166,7 @@ router.put('/etudiants/update/:id',auth, async (req,res) => {
         
         //Use the mv() method to place the file in upload directory (i.e. "uploads")
         pdp.mv('./files/' + pdp.name);
-        et.photo=path.resolve('./files/' + pdp.name);
+        et.photo='http://localhost:3000/images/' + pdp.name;
     }
 
     const etd = await Etudiant.findById(id);
