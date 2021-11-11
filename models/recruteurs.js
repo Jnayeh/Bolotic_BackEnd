@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const etudiantSchema = new Schema(
+const recruteurSchema = new Schema(
     {
         nom: {
             type: String,
@@ -42,11 +42,15 @@ const etudiantSchema = new Schema(
             type: String,
             required: false
         },
+        logo_societe: {
+            type: String,
+            required: false
+        },
         date_creation: {
             type: Date, default: Date.now
         },
     }
 );
 
-const Etudiant = mongoose.model('Etudiant', etudiantSchema);
-module.exports = Etudiant;
+const Recruteur = mongoose.model('Recruteur', recruteurSchema);
+module.exports = Recruteur;

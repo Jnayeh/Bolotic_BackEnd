@@ -14,6 +14,7 @@ const _ = require('lodash');
 
 //Routes
 const EtudiantRoutes = require('./routes/EtudiantRoutes');
+const RecruteurRoutes = require('./routes/RecruteurRoutes');
 
 
 //Express App
@@ -30,24 +31,32 @@ app.use(fileUpload({
 //add other middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 
 //       STATIC FILES
 // FILES THAT WE WANT TO GET FROM BACKEND SERVER
+//PHOTOS
 app.use(express.static('files'));
-app.use('/images', express.static(path.join(__dirname, 'files')))
+
+//COMPANY LOGO
+app.use('/logos', express.static(path.join(__dirname, 'logos')))
+
+
 
 //     LOGS
 app.use(morgan('dev'));
 
 //       USE ROUTES
 app.use(EtudiantRoutes);
+app.use(RecruteurRoutes);
 
 // // //    ERRORS SHOULD ALWAYS BE AFTER EVERYTHING 
 app.use((req, res) => {
-    res.status(404).send({error:{
-        message: "Undefied Route",
-        code:"404"
-    }});
-  })
+    res.status(404).send({
+        error: {
+            message: "Undefied Route",
+            code: "404"
+        }
+    });
+})
