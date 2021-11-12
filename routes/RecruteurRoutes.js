@@ -29,7 +29,7 @@ router.get('/recruteurs', auth, (req, res) => {
 // JSON
 // AUTHENTIFICATION NEEDED
 
-router.get('/recruteur/:id', auth, (req, res) => {
+router.get('/recruteur/:id', (req, res) => {
     const id = req.params.id
     Recruteur.findOne({ id: id })
         .then((result) => {
@@ -118,7 +118,7 @@ router.post('/registerRecruteur', async (req, res) => {
 
                 //Use the mv() method to place the file in upload directory (i.e. "uploads")
                 pdp.mv('./files/' + pdp.name);
-                _rec.photo = '/' + pdp.name;
+                _rec.photo = pdp.name;
             }
 
             if (req.files.logo_societe) {
@@ -128,7 +128,7 @@ router.post('/registerRecruteur', async (req, res) => {
 
                 //Use the mv() method to place the file in upload directory (i.e. "uploads")
                 logo_societe.mv('./logos/' + logo_societe.name);
-                _rec.logo_societe = '/logos/' + logo_societe.name;
+                _rec.logo_societe = 'logos/' + logo_societe.name;
             }
         }
 
@@ -178,7 +178,7 @@ router.put('/recruteurs/update/:id', auth, async (req, res) => {
 
                 //Use the mv() method to place the file in upload directory (i.e. "uploads")
                 pdp.mv('./files/' + pdp.name);
-                _rec.photo ='/' + pdp.name;
+                _rec.photo = pdp.name;
             }
 
             if (req.files.logo_societe) {
@@ -188,7 +188,7 @@ router.put('/recruteurs/update/:id', auth, async (req, res) => {
 
                 //Use the mv() method to place the file in upload directory (i.e. "uploads")
                 logo_societe.mv('./logos/' + logo_societe.name);
-                _rec.logo_societe = '/logos/' + logo_societe.name;
+                _rec.logo_societe = 'logos/' + logo_societe.name;
             }
         }
 
