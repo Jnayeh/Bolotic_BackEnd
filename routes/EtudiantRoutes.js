@@ -118,7 +118,7 @@ router.post('/registerEtudiant', async (req, res) => {
 
                 //Use the mv() method to place the file in upload directory (i.e. "uploads")
                 pdp.mv('./files/' + pdp.name);
-                _et.photo = pdp.name;
+                _et.photo ='/' + pdp.name;
             }
         }
 
@@ -167,7 +167,7 @@ router.put('/etudiants/update/:id', auth, async (req, res) => {
 
                 //Use the mv() method to place the file in upload directory (i.e. "uploads")
                 pdp.mv('./files/' + pdp.name);
-                _et.photo = pdp.name;
+                _et.photo ='/' + pdp.name;
             }
         }
         const old_et = await Etudiant.findById(id).select('+mot_de_passe');
