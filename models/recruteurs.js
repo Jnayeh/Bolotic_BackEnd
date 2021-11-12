@@ -42,6 +42,10 @@ const recruteurSchema = new Schema(
             type: String,
             required: false
         },
+        societe: {
+            type: String,
+            required: false
+        },
         logo_societe: {
             type: String,
             required: false
