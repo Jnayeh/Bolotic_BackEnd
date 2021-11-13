@@ -15,6 +15,7 @@ const _ = require('lodash');
 //Routes
 const EtudiantRoutes = require('./routes/EtudiantRoutes');
 const RecruteurRoutes = require('./routes/RecruteurRoutes');
+const AdministrateurRoutes = require('./routes/AdminRoutes');
 
 
 //Express App
@@ -39,8 +40,11 @@ app.use(express.urlencoded({ extended: true }));
 //PHOTOS
 app.use(express.static('files'));
 
-//COMPANY LOGO
+//COMPANY LOGOS
 app.use('/logos', express.static(path.join(__dirname, 'logos')))
+
+//ADMIN PHOTOS
+app.use('/admin', express.static(path.join(__dirname, 'admin_files')))
 
 
 
@@ -50,6 +54,7 @@ app.use(morgan('dev'));
 //       USE ROUTES
 app.use(EtudiantRoutes);
 app.use(RecruteurRoutes);
+app.use(AdministrateurRoutes);
 
 // // //    ERRORS SHOULD ALWAYS BE AFTER EVERYTHING 
 app.use((req, res) => {

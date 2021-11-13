@@ -1,6 +1,5 @@
 const express = require('express');
 
-const admin = require('../models/admins.js');
 
 const path = require("path");
 const bcrypt = require("bcryptjs");
