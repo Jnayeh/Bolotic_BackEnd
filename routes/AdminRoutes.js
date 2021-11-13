@@ -86,7 +86,7 @@ router.post("/loginAdmin", async (req, res) => {
 // REGISTER admin
 // FORM-DATA
 
-router.post('/admins', async (req, res) => {
+router.post('/admins/add', async (req, res) => {
     
 
     const _admin = new Administrateur(JSON.parse(req.body.admin));
