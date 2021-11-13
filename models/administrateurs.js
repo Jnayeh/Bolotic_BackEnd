@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const recruteurSchema = new Schema(
+const administrateurSchema = new Schema(
     {
         nom: {
             type: String,
@@ -25,24 +25,7 @@ const recruteurSchema = new Schema(
             required: true,
             select: false
         },
-        suspended: {
-            type: Boolean,
-            default: false,
-            required: true
-        },
-        cin: {
-            type: Number,
-            required: false
-        },
         photo: {
-            type: String,
-            required: false
-        },
-        societe: {
-            type: String,
-            required: false
-        },
-        logo_societe: {
             type: String,
             required: false
         },
@@ -52,5 +35,5 @@ const recruteurSchema = new Schema(
     }
 );
 
-const Recruteur = mongoose.model('Recruteur', recruteurSchema);
-module.exports = Recruteur;
+const Administrateur = mongoose.model('Administrateur', administrateurSchema);
+module.exports = Administrateur;

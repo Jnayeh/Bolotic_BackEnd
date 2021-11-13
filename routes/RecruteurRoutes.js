@@ -21,7 +21,7 @@ router.get('/recruteurs', auth, (req, res) => {
             res.send(result)
         })
         .catch((err) => {
-            console.log(err);
+            res.send(err);
         })
 });
 
@@ -31,12 +31,12 @@ router.get('/recruteurs', auth, (req, res) => {
 
 router.get('/recruteur/:id', (req, res) => {
     const id = req.params.id
-    Recruteur.findOne({ id: id })
+    Recruteur.findById(id)
         .then((result) => {
             res.send(result)
         })
         .catch((err) => {
-            console.log(err);
+            res.send(err);
         })
 });
 
@@ -79,7 +79,8 @@ router.post("/loginRecruteur", async (req, res) => {
         }
     }
     catch (err) {
-        console.log(err);
+
+        res.send(err);
     }
 });
 
@@ -97,7 +98,7 @@ router.post('/registerRecruteur', async (req, res) => {
     _rec.email = _rec.email.toLowerCase();
 
     // VALIDATE INPUT
-    if (!(_rec.email && _rec.mot_de_passe && _rec.nom && _rec.prenom && _rec.num_tel && _rec.universite)) {
+    if (!(_rec.email && _rec.mot_de_passe && _rec.nom && _rec.prenom && _rec.num_tel)) {
         res.status(400).send("All input are required");
     }
 
@@ -132,8 +133,6 @@ router.post('/registerRecruteur', async (req, res) => {
             }
         }
 
-        console.log(_rec);
-
         _rec.save()
             .then((result) => {
 
@@ -150,7 +149,7 @@ router.post('/registerRecruteur', async (req, res) => {
                 res.json(token);
             })
             .catch((err) => {
-                console.log(err);
+                res.send(err);
             });
     }
 

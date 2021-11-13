@@ -21,7 +21,7 @@ router.get('/etudiants', auth, (req, res) => {
             res.send(result)
         })
         .catch((err) => {
-            console.log(err);
+            res.send(err);
         })
 });
 
@@ -31,12 +31,12 @@ router.get('/etudiants', auth, (req, res) => {
 
 router.get('/etudiant/:id', auth, (req, res) => {
     const id = req.params.id
-    Etudiant.findOne({ id: id })
+    Etudiant.findById(id )
         .then((result) => {
             res.send(result)
         })
         .catch((err) => {
-            console.log(err);
+            res.send(err);
         })
 });
 
@@ -79,7 +79,7 @@ router.post("/loginEtudiant", async (req, res) => {
         }
     }
     catch (err) {
-        console.log(err);
+        res.send(err);
     }
 });
 
@@ -140,7 +140,7 @@ router.post('/registerEtudiant', async (req, res) => {
                 res.json(token);
             })
             .catch((err) => {
-                console.log(err);
+                res.send(err);
             });
     }
 
@@ -152,7 +152,8 @@ router.post('/registerEtudiant', async (req, res) => {
 router.put('/etudiants/update/:id', auth, async (req, res) => {
     const id = req.params.id;
     const _et = new Etudiant(JSON.parse(req.body.etudiant));
-    if (_et) {
+    const old_et = await Etudiant.findById(id).select('+mot_de_passe');
+    if (old_et) {
         _et._id = id;
 
         // CONVERT EMAIL TO LOWERCASE
@@ -170,7 +171,6 @@ router.put('/etudiants/update/:id', auth, async (req, res) => {
                 _et.photo = pdp.name;
             }
         }
-        const old_et = await Etudiant.findById(id).select('+mot_de_passe');
         _et.mot_de_passe = old_et.mot_de_passe;
         await Etudiant.findByIdAndUpdate(id, _et);
         res.send(await Etudiant.findById(id));
@@ -218,7 +218,7 @@ router.delete('/etudiants/delete/:id', auth, (req, res) => {
             res.send(result);
         })
         .catch((err) => {
-            console.log(err);
+            res.send(err);
         })
 
 })
@@ -232,7 +232,7 @@ router.delete('/etudiants/delete/:id', auth, (req, res) => {
 //         res.send(result);
 //     })
 //     .catch((err) => {
-//         console.log(err);
+//         res.send(err);
 //     })
 // })
 
