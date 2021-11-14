@@ -10,7 +10,7 @@ const Administrateur = require('../models/administrateurs.js');
 // INITIALIZE ROUTER
 const router = express.Router();
 
-//  GET adminS
+//  GET ADMINS
 // JSON
 // AUTHENTIFICATION NOT NEEDED
 
@@ -25,7 +25,7 @@ router.get('/admins', auth, (req, res) => {
         })
 });
 
-// GET admin BY ID
+// GET ADMIN BY ID
 // JSON
 // AUTHENTIFICATION NEEDED
 
@@ -42,7 +42,7 @@ router.get('/admin/:id', auth, (req, res) => {
 
 
 
-// LOGIN admin
+// LOGIN ADMIN
 // JSON
 
 router.post("/loginAdmin", async (req, res) => {
@@ -56,7 +56,7 @@ router.post("/loginAdmin", async (req, res) => {
             res.status(400).send("All input is required");
         }
 
-        // VALIDATE admin
+        // VALIDATE ADMIN
         const _admin = await Administrateur.findOne({ email: email }).select('+mot_de_passe');
 
 
@@ -71,7 +71,7 @@ router.post("/loginAdmin", async (req, res) => {
                 }
             );
 
-            // RETURN admin TOKEN
+            // RETURN TOKEN
             res.json(token);
         }
         else {
@@ -83,7 +83,7 @@ router.post("/loginAdmin", async (req, res) => {
     }
 });
 
-// REGISTER admin
+// ADD ADMIN
 // FORM-DATA
 
 router.post('/admins/add', async (req, res) => {
@@ -135,7 +135,7 @@ router.post('/admins/add', async (req, res) => {
 
 })
 
-// UPDATE admin
+// UPDATE ADMIN
 // FORM-DATA
 
 router.put('/admins/update/:id', auth, async (req, res) => {
@@ -197,7 +197,7 @@ router.put('/admins/change_mdp/:id', auth, async (req, res) => {
 
 })
 
-// DELETE admin
+// DELETE ADMIN
 // JSON
 
 router.delete('/admins/delete/:id', auth, (req, res) => {
