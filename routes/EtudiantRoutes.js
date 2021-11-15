@@ -62,12 +62,13 @@ router.post("/loginEtudiant", async (req, res) => {
 
         if (_etudiant && (await bcrypt.compare(mot_de_passe, _etudiant.mot_de_passe))) {
 
-            // CREATE TOKEN
-            const token = jwt.sign(
-                { etudiant_id: _etudiant.id },
+             // CREATE TOKEN
+             const token = jwt.sign(
+                { id: _etudiant._id ,
+                role: "etudiant"},
                 process.env.TOKEN_KEY,
                 {
-                    expiresIn: "48h",
+                    expiresIn: "24h",
                 }
             );
 
@@ -127,15 +128,21 @@ router.post('/registerEtudiant', async (req, res) => {
         _et.save()
             .then((result) => {
 
-                // CREATE TOKEN
-                const token = jwt.sign(
-                    { etudiant_id: result.id },
-                    process.env.TOKEN_KEY,
-                    {
-                        expiresIn: "24h",
-                    }
-                );
+                Etudiant.findOne({ email: result.email }).then(et => {
 
+                    // CREATE TOKEN
+                    const token = jwt.sign(
+                        { id: et._id ,
+                        role: "etudiant"},
+                        process.env.TOKEN_KEY,
+                        {
+                            expiresIn: "24h",
+                        }
+                    );
+
+                    // SAVE RECRUITER TOKEN
+                    res.json(token);
+                })
                 // SAVE ETUDIANT TOKEN
                 res.json(token);
             })

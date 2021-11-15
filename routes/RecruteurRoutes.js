@@ -29,7 +29,7 @@ router.get('/recruteurs', auth, (req, res) => {
 // JSON
 // AUTHENTIFICATION NEEDED
 
-router.get('/recruteur/:id', (req, res) => {
+router.get('/recruteur/:id', auth, (req, res) => {
     const id = req.params.id
     Recruteur.findById(id)
         .then((result) => {
@@ -64,10 +64,11 @@ router.post("/loginRecruteur", async (req, res) => {
 
             // CREATE TOKEN
             const token = jwt.sign(
-                { recruteur_id: _rec.id },
+                { id: _rec._id ,
+                role: "recruteur"},
                 process.env.TOKEN_KEY,
                 {
-                    expiresIn: "48h",
+                    expiresIn: "24h",
                 }
             );
 
@@ -136,17 +137,22 @@ router.post('/registerRecruteur', async (req, res) => {
         _rec.save()
             .then((result) => {
 
-                // CREATE TOKEN
-                const token = jwt.sign(
-                    { recruteur_id: result.id },
-                    process.env.TOKEN_KEY,
-                    {
-                        expiresIn: "24h",
-                    }
-                );
+                Recruteur.findOne({ email: result.email }).then(rec => {
 
-                // SAVE RECRUITER TOKEN
-                res.json(token);
+                    // CREATE TOKEN
+                    const token = jwt.sign(
+                        { id: rec._id,
+                        role: "recruteur"},
+                        process.env.TOKEN_KEY,
+                        {
+                            expiresIn: "24h",
+                        }
+                    );
+
+                    // SAVE RECRUITER TOKEN
+                    res.json(token);
+                })
+
             })
             .catch((err) => {
                 res.send(err);
