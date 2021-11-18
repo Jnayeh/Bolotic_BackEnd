@@ -16,6 +16,7 @@ const _ = require('lodash');
 const EtudiantRoutes = require('./routes/EtudiantRoutes');
 const RecruteurRoutes = require('./routes/RecruteurRoutes');
 const AdministrateurRoutes = require('./routes/AdminRoutes');
+const BoulotRoutes = require('./routes/boulotRoutes');
 
 
 //Express App
@@ -55,6 +56,7 @@ app.use(morgan('dev'));
 app.use(EtudiantRoutes);
 app.use(RecruteurRoutes);
 app.use(AdministrateurRoutes);
+app.use(BoulotRoutes);
 
 // // //    ERRORS SHOULD ALWAYS BE AFTER EVERYTHING 
 app.use((req, res) => {

@@ -12,7 +12,7 @@ const router = express.Router();
 
 //  GET ETUDIANTS
 // JSON
-// AUTHENTIFICATION NOT NEEDED
+// AUTHENTIFICATION NEEDED
 
 router.get('/etudiants', auth, (req, res) => {
 
@@ -31,7 +31,7 @@ router.get('/etudiants', auth, (req, res) => {
 
 router.get('/etudiant/:id', auth, (req, res) => {
     const id = req.params.id
-    Etudiant.findById(id )
+    Etudiant.findById(id)
         .then((result) => {
             res.send(result)
         })
@@ -62,10 +62,12 @@ router.post("/loginEtudiant", async (req, res) => {
 
         if (_etudiant && (await bcrypt.compare(mot_de_passe, _etudiant.mot_de_passe))) {
 
-             // CREATE TOKEN
-             const token = jwt.sign(
-                { id: _etudiant._id ,
-                role: "etudiant"},
+            // CREATE TOKEN
+            const token = jwt.sign(
+                {
+                    id: _etudiant._id,
+                    role: "etudiant"
+                },
                 process.env.TOKEN_KEY,
                 {
                     expiresIn: "24h",
@@ -91,9 +93,6 @@ router.post('/registerEtudiant', async (req, res) => {
 
     const _et = new Etudiant(JSON.parse(req.body.etudiant));
 
-    // ENCRYPTING mot_de_passe
-    _et.mot_de_passe = await bcrypt.hash(_et.mot_de_passe, 10);
-
     // CONVERT EMAIL TO LOWERCASE
     _et.email = _et.email.toLowerCase();
 
@@ -109,6 +108,9 @@ router.post('/registerEtudiant', async (req, res) => {
     }
 
     else {
+        // ENCRYPTING mot_de_passe
+        _et.mot_de_passe = await bcrypt.hash(_et.mot_de_passe, 10);
+
 
         if (req.files) {
 
@@ -132,8 +134,10 @@ router.post('/registerEtudiant', async (req, res) => {
 
                     // CREATE TOKEN
                     const token = jwt.sign(
-                        { id: et._id ,
-                        role: "etudiant"},
+                        {
+                            id: et._id,
+                            role: "etudiant"
+                        },
                         process.env.TOKEN_KEY,
                         {
                             expiresIn: "24h",
