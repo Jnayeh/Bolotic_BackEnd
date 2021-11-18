@@ -22,6 +22,7 @@ const boulotSchema = new Schema(
             type: Date,
             required: false,
         },
+        //One recruteur reference
         recruteur: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Recruteur"
