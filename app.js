@@ -16,7 +16,7 @@ const _ = require('lodash');
 const EtudiantRoutes = require('./routes/EtudiantRoutes');
 const RecruteurRoutes = require('./routes/RecruteurRoutes');
 const AdministrateurRoutes = require('./routes/AdminRoutes');
-const BoulotRoutes = require('./routes/boulotRoutes');
+const BoulotRoutes = require('./routes/BoulotRoutes');
 
 
 //Express App

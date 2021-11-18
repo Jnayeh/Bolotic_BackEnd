@@ -49,6 +49,13 @@ const recruteurSchema = new Schema(
         date_creation: {
             type: Date, default: Date.now
         },
+        //Many boulots reference 
+        boulots:[
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Boulot"
+              }
+        ]
     }
 );
 

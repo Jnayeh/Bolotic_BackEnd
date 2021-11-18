@@ -4,7 +4,7 @@ const boulotSchema = new Schema(
     {
         titre: {
             type: String,
-            required:true
+            required: true
         },
         description: {
             type: String,
@@ -12,15 +12,19 @@ const boulotSchema = new Schema(
         },
         prix: {
             type: Number,
-            required:true
+            required: true
         },
         date_debut: {
-            type: dateTime,
-            required:true,
+            type: Date,
+            required: false,
         },
         date_fin: {
-            type: dateTime,
-            required:true,
+            type: Date,
+            required: false,
+        },
+        recruteur: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Recruteur"
         }
     }
 )
