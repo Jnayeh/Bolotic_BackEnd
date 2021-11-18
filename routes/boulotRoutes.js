@@ -75,6 +75,7 @@ router.put('/boulots/update/:id', async (req, res) => {
     if (old_blt) {
         _boulot._id = id;
 
+        // The recruiter can never be changed but the category can so u need to reed the one-to-many article it has ALMOST everything  
         
         await Boulot.findByIdAndUpdate(id, _boulot);
         res.send(await Boulot.findById(id));
