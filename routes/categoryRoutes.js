@@ -57,14 +57,11 @@ router.post('/categories/add', (req, res) => {
     const decoded = jwt.verify(token, config.TOKEN_KEY);
     
     if(decoded.role=="administrateur"){
-        Category.create(_category).then(admin_category => {
-            console.log("\n>> Category Created:\n", admin_category)
-            .then((cat)=>{
-                res.send(cat);
-            })
-            .catch((err) => {
-                res.send(err);
-            });
+        Category.create(_category).then(category => {
+            console.log("\n>> Category Created:\n", category)
+            
+            res.send(category);
+            
         })
         .catch((err) => {
             res.send(err);
