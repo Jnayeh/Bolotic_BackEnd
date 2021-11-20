@@ -16,7 +16,8 @@ const boulotSchema = new Schema(
         },
         date_debut: {
             type: Date,
-            required: false,
+            required: true,
+            default: Date.now()
         },
         date_fin: {
             type: Date,

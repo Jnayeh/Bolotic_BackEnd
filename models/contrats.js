@@ -8,9 +8,9 @@ const contratSchema = new Schema(
             default: "non selected"
         },
         //One boulot reference
-        offre: {
+        boulot: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Offre"
+            ref: "Boulot"
         },
         //One etudiant reference
         etudiant: {

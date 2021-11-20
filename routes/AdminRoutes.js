@@ -65,7 +65,7 @@ router.post("/loginAdmin", async (req, res) => {
             // CREATE TOKEN
             const token = jwt.sign(
                 { id: _admin._id,
-                role:"admin" },
+                role:"administrateur" },
                 process.env.TOKEN_KEY,
                 {
                     expiresIn: "48h",

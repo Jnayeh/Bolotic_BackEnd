@@ -17,6 +17,7 @@ const EtudiantRoutes = require('./routes/EtudiantRoutes');
 const RecruteurRoutes = require('./routes/RecruteurRoutes');
 const AdministrateurRoutes = require('./routes/AdminRoutes');
 const BoulotRoutes = require('./routes/BoulotRoutes');
+const CategoryRoutes = require('./routes/CategoryRoutes');
 
 
 //Express App
@@ -57,6 +58,7 @@ app.use(EtudiantRoutes);
 app.use(RecruteurRoutes);
 app.use(AdministrateurRoutes);
 app.use(BoulotRoutes);
+app.use(CategoryRoutes);
 
 // // //    ERRORS SHOULD ALWAYS BE AFTER EVERYTHING 
 app.use((req, res) => {
