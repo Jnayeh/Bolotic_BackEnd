@@ -208,7 +208,7 @@ router.put('/etudiants/change_mdp/:id', auth, async (req, res) => {
             res.send("changed password");
         }
         else {
-            res.status(400).send("wrong password");
+            res.status(400).send("same password");
         }
     }
     else {

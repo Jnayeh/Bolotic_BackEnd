@@ -26,6 +26,11 @@ const boulotSchema = new Schema(
         recruteur: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Recruteur"
+        },
+        //One category reference
+        category: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Category"
         }
     }
 )
