@@ -73,6 +73,26 @@ router.post('/categories/add', (req, res) => {
 })
 
 
+// UPDATE Category
+// JSON
+
+router.put ('/categories/update/:id', async(req, res) => {
+    const id = req.params.id;
+    const _cat = new Category(JSON.parse(req.body));
+    const old_cat = await Category.findById(id).select('+mot_de_passe');
+    if (old_cat) {
+        _cat._id = id;
+
+        
+        await Category.findByIdAndUpdate(id, _cat);
+        res.send(await Category.findById(id));
+    }
+    else {
+        res.send("Category NOT FOUND");
+    }
+})
+
+
 // DELETE CATEGORY
 // JSON
 
