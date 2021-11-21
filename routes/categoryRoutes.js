@@ -45,7 +45,7 @@ router.get('/categories/:id', auth, (req, res) => {
 });
 
 
-// ADD Category
+// ADD CATEGORY
 // JSON
 
 router.post('/categories/add', (req, res) => {
@@ -73,7 +73,7 @@ router.post('/categories/add', (req, res) => {
 })
 
 
-// UPDATE Category
+// UPDATE CATEGORY
 // JSON
 
 router.put('/categories/update/:id', async (req, res) => {
@@ -87,7 +87,7 @@ router.put('/categories/update/:id', async (req, res) => {
         res.send(await Category.findById(id));
     }
     else {
-        res.send("Category NOT FOUND");
+        res.send("CATEGORY NOT FOUND");
     }
 })
 
