@@ -52,7 +52,7 @@ router.post('/categories/add', (req, res) => {
     const _category = new Category(req.body);
 
     //GET TOKEN FROM HEADERS
-    const token = req.headers["access-token"];
+    const token = req.headers["authorization"];
     // DECODE TOKEN
     const decoded = jwt.verify(token, config.TOKEN_KEY);
 
@@ -68,7 +68,7 @@ router.post('/categories/add', (req, res) => {
             });
     }
     else {
-        res.send("Not Admin");
+        res.status(403).send("Not Admin");
     }
 })
 

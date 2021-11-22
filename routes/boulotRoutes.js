@@ -27,11 +27,11 @@ router.get('/boulots', (req, res) => {
 // ADD BOULOT
 // JSON
 
-router.post('/boulots/add', async (req, res) => {
+router.post('/boulots/add', auth, async (req, res) => {
     const _boulot = new Boulot(req.body);
 
     //GET TOKEN FROM HEADERS
-    const token = req.headers["access-token"];
+    const token = req.headers["authorization"];
     // DECODE TOKEN
     const decoded = jwt.verify(token, config.TOKEN_KEY);
     // GET RECRUITER ID
@@ -54,7 +54,7 @@ router.post('/boulots/add', async (req, res) => {
             res.send(rec_boulot);
         })
             .catch((err) => {
-                res.send(err);
+                res.status(400).send(err);
             });
     }
     else {
@@ -66,12 +66,12 @@ router.post('/boulots/add', async (req, res) => {
 // UPDATE BOULOT
 // JSON
 
-router.put('/boulots/update/:id', async (req, res) => {
+router.put('/boulots/update/:id', auth, async (req, res) => {
     const id = req.params.id;
     const _boulot = new Boulot(req.body);
 
     //GET TOKEN FROM HEADERS
-    const token = req.headers["access-token"];
+    const token = req.headers["authorization"];
 
     const old_boulot = await Boulot.findById(id);
     if (old_boulot) {
@@ -106,7 +106,7 @@ router.put('/boulots/update/:id', async (req, res) => {
 // DELETE BOULOT
 // JSON
 
-router.delete('/boulots/delete/:id', async (req, res) => {
+router.delete('/boulots/delete/:id', auth, async (req, res) => {
     const id = req.params.id;
     const old_boulot = await Boulot.findById(id);
     Boulot.findByIdAndDelete(id)

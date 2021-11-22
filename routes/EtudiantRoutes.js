@@ -78,7 +78,7 @@ router.post("/loginEtudiant", async (req, res) => {
             res.json(token);
         }
         else {
-            res.status(400).send("Invalid Credentials");
+            res.status(400).send({error:"Invalid Credentials"});
         }
     }
     catch (err) {
@@ -127,7 +127,7 @@ router.post('/registerEtudiant', async (req, res) => {
 
         console.log(_et);
 
-        _et.save()
+        Etudiant.create(_et)
             .then((result) => {
 
                 Etudiant.findOne({ email: result.email }).then(et => {

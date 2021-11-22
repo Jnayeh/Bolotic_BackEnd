@@ -53,7 +53,7 @@ router.post("/loginRecruteur", async (req, res) => {
 
         // VALIDATE INPUT
         if (!(email && mot_de_passe)) {
-            res.status(400).send("All input is required");
+            res.status(400).send({error:"All input is required"});
         }
 
         // VALIDATE RECRUITER
@@ -76,7 +76,8 @@ router.post("/loginRecruteur", async (req, res) => {
             res.json(token);
         }
         else {
-            res.status(400).send("Invalid Credentials");
+            
+            res.status(400).send({error:"Invalid Credentials"});
         }
     }
     catch (err) {
@@ -100,13 +101,14 @@ router.post('/registerRecruteur', async (req, res) => {
 
     // VALIDATE INPUT
     if (!(_rec.email && _rec.mot_de_passe && _rec.nom && _rec.prenom && _rec.num_tel)) {
-        res.status(400).send("All input are required");
+        res.status(400).send({error:"All input is required"});
     }
 
     const oldRecruteur = await Recruteur.findOne({ email: _rec.email });
 
     if (oldRecruteur) {
-        return res.status(409).send("Recruteur Already Exist. Please Login");
+        
+        return res.status(409).send({error:"Recruteur Already Exist. Please Login"});
     }
 
     else {
@@ -134,7 +136,7 @@ router.post('/registerRecruteur', async (req, res) => {
             }
         }
 
-        _rec.save()
+        Recruteur.create(_rec)
             .then((result) => {
 
                 Recruteur.findOne({ email: result.email }).then(rec => {
