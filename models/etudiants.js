@@ -45,6 +45,13 @@ const etudiantSchema = new Schema(
         date_creation: {
             type: Date, default: Date.now
         },
+        //Many avis reference 
+        avis:[
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Avis"
+              }
+        ]
     }
 );
 

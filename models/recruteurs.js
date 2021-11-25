@@ -55,6 +55,13 @@ const recruteurSchema = new Schema(
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Boulot"
               }
+        ],
+        //Many avis reference 
+        avis:[
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Avis"
+              }
         ]
     }
 );

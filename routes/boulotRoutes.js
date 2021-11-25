@@ -14,8 +14,12 @@ const config = process.env;
 // INITIALIZE ROUTER
 const router = express.Router();
 
+//  GET BOULOTS
+// JSON
+// AUTHENTIFICATION NEEDED
+
 router.get('/boulots', (req, res) => {
-    Boulot.find()
+    Boulot.find().populate("recruteur")
         .then((result) => {
             res.send(result)
         })
@@ -23,6 +27,38 @@ router.get('/boulots', (req, res) => {
             res.send(err);
         })
 })
+
+// GET BOULOTS BY ID
+// JSON
+// AUTHENTIFICATION NEEDED
+
+router.get('/boulots/recruteur/:id', auth, (req, res) => {
+    const id = req.params.id
+    Boulot.find({recruteur : id}).populate("recruteur")
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            res.send(err);
+        })
+});
+
+// GET BOULOT BY ID
+// JSON
+// AUTHENTIFICATION NEEDED
+
+router.get('/boulot/:id', auth, (req, res) => {
+    const id = req.params.id
+    Etudiant.findById(id).populate("recruteur")
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            res.send(err);
+        })
+});
+
+
 
 // ADD BOULOT
 // JSON
