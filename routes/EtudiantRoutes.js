@@ -144,11 +144,10 @@ router.post('/registerEtudiant', async (req, res) => {
                         }
                     );
 
-                    // SAVE RECRUITER TOKEN
+                    // SAVE ETUDIANT TOKEN
                     res.json(token);
                 })
-                // SAVE ETUDIANT TOKEN
-                res.json(token);
+                
             })
             .catch((err) => {
                 res.send(err);
