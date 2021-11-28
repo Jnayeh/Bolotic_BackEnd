@@ -55,7 +55,7 @@ router.get('/boulot/:id', auth, (req, res) => {
                 res.send(result)
             }
             else{
-                res.send("BOULOT NOT FOUND");
+                res.status(400).send("BOULOT NOT FOUND");
             }
         })
         .catch((err) => {
