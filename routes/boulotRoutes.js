@@ -32,8 +32,8 @@ router.get('/boulots', (req, res) => {
 // JSON
 // AUTHENTIFICATION NEEDED
 
-router.get('/boulots/recruteur/:id', auth, (req, res) => {
-    const id = req.params.id
+router.get('/boulots/recruteur/:rec_id', auth, (req, res) => {
+    const id = req.params.rec_id
     Boulot.find({recruteur : id}).populate("recruteur")
         .then((result) => {
             res.send(result)
@@ -51,7 +51,12 @@ router.get('/boulot/:id', auth, (req, res) => {
     const id = req.params.id
     Boulot.findById(id).populate("recruteur")
         .then((result) => {
-            res.send(result)
+            if(result){
+                res.send(result)
+            }
+            else{
+                res.send("BOULOT NOT FOUND");
+            }
         })
         .catch((err) => {
             res.send(err);

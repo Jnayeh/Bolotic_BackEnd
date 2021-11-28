@@ -32,9 +32,9 @@ router.get('/contrats', (req, res) => {
 // JSON
 // AUTHENTIFICATION NEEDED
 
-router.get('/contrats/bouot/:id', auth, (req, res) => {
-    const id = req.params.id
-    Contrat.find({boulot : id}).populate("etudiant")
+router.get('/contrats/boulot/:boulot_id', auth, (req, res) => {
+    const boulot_id = req.params.boulot_id
+    Contrat.find({boulot : boulot_id}).populate("etudiant")
         .then((result) => {
             res.send(result)
         })

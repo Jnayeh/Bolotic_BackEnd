@@ -10,10 +10,6 @@ const boulotSchema = new Schema(
             type: String,
             required: true
         },
-        prix: {
-            type: Number,
-            required: true
-        },
         date_debut: {
             type: Date,
             required: true,
@@ -22,6 +18,10 @@ const boulotSchema = new Schema(
         date_fin: {
             type: Date,
             required: false,
+        },
+        prix: {
+            type: Number,
+            required: true
         },
         //One recruteur reference
         recruteur: {
