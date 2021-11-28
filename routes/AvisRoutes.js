@@ -29,12 +29,12 @@ router.get('/avis', (req, res) => {
         })
 })
 
-// GET AVIS BY ID
+// GET RECRUTEUR AVIS BY ID
 // JSON
 // AUTHENTIFICATION NEEDED
 
-router.get('/avis/recruteur/:id', auth, (req, res) => {
-    const id = req.params.id
+router.get('/avis/recruteur/:rec_id', auth, (req, res) => {
+    const id = req.params.rec_id
     Avis.find({ etudiant: id }).populate("etudiant")
         .then((result) => {
             res.send(result)
@@ -44,12 +44,12 @@ router.get('/avis/recruteur/:id', auth, (req, res) => {
         })
 });
 
-// GET AVIS BY ID
+// GET ETUDIANT AVIS BY ID
 // JSON
 // AUTHENTIFICATION NEEDED
 
-router.get('/avis/etudiant/:id', auth, (req, res) => {
-    const id = req.params.id
+router.get('/avis/etudiant/:et_id', auth, (req, res) => {
+    const id = req.params.et_id
     Avis.find({ recruteur: id }).populate("recruteur")
         .then((result) => {
             res.send(result)

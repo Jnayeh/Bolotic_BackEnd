@@ -14,13 +14,13 @@ const config = process.env;
 const router = express.Router();
 
 
-// GET AVIS BY ID
+// GET NOTIFICATION BY ID
 // JSON
 // AUTHENTIFICATION NEEDED
 
 router.get('/notifications/recruteur/:id', auth, (req, res) => {
     const id = req.params.id
-    Notification.find({ etudiant: id }).populate("etudiant")
+    Notification.find({ recruteur: id }).populate("etudiant")
         .then((result) => {
             res.send(result)
         })
@@ -29,13 +29,13 @@ router.get('/notifications/recruteur/:id', auth, (req, res) => {
         })
 });
 
-// GET AVIS BY ID
+// GET NOTIFICATION BY ID
 // JSON
 // AUTHENTIFICATION NEEDED
 
 router.get('/notifications/etudiant/:id', auth, (req, res) => {
     const id = req.params.id
-    Notification.find({ recruteur: id }).populate("recruteur")
+    Notification.find({ etudiant: id }).populate("recruteur")
         .then((result) => {
             res.send(result)
         })
@@ -44,7 +44,7 @@ router.get('/notifications/etudiant/:id', auth, (req, res) => {
         })
 });
 
-// ADD AVIS
+// ADD NOTIFICATION
 // JSON
 
 router.post('/notifications/add', auth, async (req, res) => {
@@ -82,15 +82,13 @@ router.post('/notifications/add', auth, async (req, res) => {
         });
 })
 
+
 // UPDATE notifications
 // JSON
 
 router.put('/notifications/update/:id', auth, async (req, res) => {
     const id = req.params.id;
     const _notif = new Notification(req.body);
-
-    //GET TOKEN FROM HEADERS
-    const token = req.headers["authorization"];
 
     const old_notif = await Notification.findById(id);
     if (old_notif) {
