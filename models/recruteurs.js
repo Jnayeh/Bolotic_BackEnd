@@ -62,6 +62,13 @@ const recruteurSchema = new Schema(
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Avis"
               }
+        ],
+        //Many notifications reference 
+        notifications:[
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Notification"
+              }
         ]
     }
 );

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const Boulot = require('../models/avis');
+const AVIS = require('../models/avis');
 const Recruteur = require('../models/recruteurs');
 const path = require("path");
 const auth = require("../middleware/auth");
@@ -86,32 +86,32 @@ router.post('/avis/add', auth, async (req, res) => {
     const token = req.headers["authorization"];
     // DECODE TOKEN
     const decoded = jwt.verify(token, config.TOKEN_KEY);
-    // GET RECRUITER ID
-    const rec_id = decoded.id;
-    _avis.recruteur = rec_id;
+    
+    
     if (decoded.role == "recruteur") {
-        Avis.create(_avis).then(async (rec_avis) => {
-            console.log("\n>> Created Boulot:\n", rec_avis);
+        _avis.to= _avis.etudiant;
+    }
+    else if (decoded.role == "etudiant") {
+        _avis.to= _avis.recruteur;
+    }
+    Avis.create(_avis).then(async (user_avis) => {
+        console.log("\n>> Created avis:\n", user_avis);
 
-            await Recruteur.findByIdAndUpdate(
-                rec_id,
-                { $push: { avis: rec_avis._id } },
-                { new: true, useFindAndModify: false }
-            );
-            await Etudiant.findByIdAndUpdate(
-                _avis.etudiant,
-                { $push: { avis: rec_avis._id } },
-                { new: true, useFindAndModify: false }
-            );
-            res.send(rec_avis);
-        })
-            .catch((err) => {
-                res.status(400).send(err);
-            });
-    }
-    else {
-        res.send("Not recruteur");
-    }
+        await Recruteur.findByIdAndUpdate(
+            _avis.recruteur,
+            { $push: { avis: user_avis._id } },
+            { new: true, useFindAndModify: false }
+        );
+        await Etudiant.findByIdAndUpdate(
+            _avis.etudiant,
+            { $push: { avis: user_avis._id } },
+            { new: true, useFindAndModify: false }
+        );
+        res.send(user_avis);
+    })
+        .catch((err) => {
+            res.status(400).send(err);
+        });
 })
 
 
@@ -133,7 +133,7 @@ router.put('/avis/update/:id', auth, async (req, res) => {
         res.send(await Avis.findById(id));
     }
     else {
-        res.send("BOULOT NOT FOUND");
+        res.send("AVIS NOT FOUND");
     }
 
 })
@@ -147,14 +147,14 @@ router.delete('/avis/delete/:id', auth, async (req, res) => {
     const old_avis = await Avis.findById(id);
     Avis.findByIdAndDelete(id)
         .then(async (result) => {
-            // Remove Boulot id from boulots list in the Etudiant document
+            // Remove AVIS id from avis list in the Etudiant document
             await Etudiant.findByIdAndUpdate(
                 old_avis.etudiant,
                 { $pull: { avis: old_avis._id } },
                 { multi: true }
             );
 
-            // Remove Boulot id from boulots list in the recruteur document
+            // Remove AVIS id from avis list in the recruteur document
             await Recruteur.findByIdAndUpdate(
                 old_avis.recruteur,
                 { $pull: { avis: old_avis._id } },

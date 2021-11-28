@@ -51,7 +51,21 @@ const etudiantSchema = new Schema(
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Avis"
               }
-        ]
+        ],
+        //Many notifications reference 
+        notifications:[
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Notification"
+              }
+        ],
+        //Many avis reference 
+        contrats:[
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Contrat"
+              }
+        ],
     }
 );
 

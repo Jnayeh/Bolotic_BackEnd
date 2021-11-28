@@ -32,7 +32,14 @@ const boulotSchema = new Schema(
         category: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Category"
-        }
+        },
+        //Many avis reference 
+        contrats:[
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Contrat"
+              }
+        ],
     }
 )
 const Boulot = mongoose.model('Boulot', boulotSchema);

@@ -14,7 +14,7 @@ const avisSchema = new Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Recruteur"
         },
-        //One category reference
+        //One etudiant reference
         etudiant: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Etudiant"

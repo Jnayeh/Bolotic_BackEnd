@@ -49,7 +49,7 @@ router.get('/boulots/recruteur/:id', auth, (req, res) => {
 
 router.get('/boulot/:id', auth, (req, res) => {
     const id = req.params.id
-    Etudiant.findById(id).populate("recruteur")
+    Boulot.findById(id).populate("recruteur")
         .then((result) => {
             res.send(result)
         })

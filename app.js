@@ -2,7 +2,8 @@ require("dotenv").config();
 require("./config/database").connect();
 
 const express = require('express');
-
+const { createServer } = require("http");
+const { Server } = require("socket.io");
 const path = require("path");
 const morgan = require('morgan');
 
@@ -23,8 +24,22 @@ const CategoryRoutes = require('./routes/CategoryRoutes');
 //Express App
 const app = express();
 
-//Listen to pot
-app.listen(3000);
+// Socket server
+const httpServer = createServer(app);
+// Socket Layer over Http Server
+const socket = new Server(httpServer,{
+    cors: {
+      origin: ["http://localhost:4200"]
+    }
+  });
+// On every Client Connection
+socket.on('connection', socket => {
+    console.log('Socket: client connected');
+});
+
+//Listen to port
+
+httpServer.listen(3000);
 
 // enable files upload
 app.use(fileUpload({
@@ -36,6 +51,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+// Emit notifications
+
+// Send Notification API
+app.post('/send-notification', async(req, res) => {
+    const notify = req.body;
+    socket.emit('notification', notify); // Updates Live Notification
+    res.send(notify);
+});
 
 //       STATIC FILES
 // FILES THAT WE WANT TO GET FROM BACKEND SERVER
