@@ -27,6 +27,16 @@ const NotificationRoutes = require('./routes/NotificationRoutes');
 //Express App
 const app = express();
 
+// enable files upload
+app.use(fileUpload({
+    createParentPath: true
+}));
+
+//add other middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Socket server
 const httpServer = createServer(app);
 // Socket Layer over Http Server
@@ -44,15 +54,7 @@ socket.on('connection', socket => {
 
 httpServer.listen(3000);
 
-// enable files upload
-app.use(fileUpload({
-    createParentPath: true
-}));
 
-//add other middleware
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 
 // Emit notifications

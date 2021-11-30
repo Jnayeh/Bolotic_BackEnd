@@ -6,7 +6,7 @@ const auth = require("../middleware/auth");
 
 // To Decode Token
 const jwt = require("jsonwebtoken");
-const Category = require('../models/categories');
+const Notification = require('../models/notifications');
 
 const config = process.env;
 
@@ -58,9 +58,11 @@ router.post('/notifications/add', auth, async (req, res) => {
     
     if (decoded.role == "recruteur") {
         _notif.to= _notif.etudiant;
+        _notif.recruteur=decoded.id;
     }
     else if (decoded.role == "etudiant") {
         _notif.to= _notif.recruteur;
+        _notif.etudiant=decoded.id;
     }
     Notification.create(_notif).then(async (user_notif) => {
         console.log("\n>> Created notification:\n", user_notif);
