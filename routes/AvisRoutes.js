@@ -35,7 +35,7 @@ router.get('/avis', (req, res) => {
 
 router.get('/avis/recruteur/:rec_id', auth, (req, res) => {
     const id = req.params.rec_id
-    Avis.find({ etudiant: id }).populate("etudiant")
+    Avis.find({ to: id }).populate("etudiant")
         .then((result) => {
             res.send(result)
         })
@@ -50,7 +50,7 @@ router.get('/avis/recruteur/:rec_id', auth, (req, res) => {
 
 router.get('/avis/etudiant/:et_id', auth, (req, res) => {
     const id = req.params.et_id
-    Avis.find({ recruteur: id }).populate("recruteur")
+    Avis.find({ to: id }).populate("recruteur","etudiant")
         .then((result) => {
             res.send(result)
         })
