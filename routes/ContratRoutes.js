@@ -89,6 +89,40 @@ router.post('/contrats/add', auth, async (req, res) => {
     
 })
 
+//rejeter contrat
+router.put('/contrats/reject/:id', auth, async (req, res) => {
+    const id = req.params.id;
+
+
+    const old_contrat = await Contrat.findById(id);
+    if (old_contrat) {
+        _contrat._id = id;
+
+        await Contrat.findByIdAndUpdate(id, {status: 'rejected'});
+        res.send(await Contrat.findById(id));
+    }
+    else {
+        res.send("CONTRAT NOT FOUND");
+    }
+
+})
+
+//Accepter contrat
+router.put('/contrats/accept/:id', auth, async (req, res) => {
+    const id = req.params.id;
+
+    const old_contrat = await Contrat.findById(id);
+    if (old_contrat) {
+        _contrat._id = id;
+
+        await Contrat.findByIdAndUpdate(id, {status: 'accepted'});
+        res.send(await Contrat.findById(id));
+    }
+    else {
+        res.send("CONTRAT NOT FOUND");
+    }
+
+})
 
 // UPDATE CONTRAT
 // JSON
