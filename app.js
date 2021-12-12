@@ -59,9 +59,10 @@ httpServer.listen(3000);
 
 // Emit notifications
 
+const Notification = require('./models/notifications');
 // Send Notification API
-app.post('/send-notification', async(req, res) => {
-    const notify = req.body;
+app.post('/send_notification', async(req, res) => {
+    const notify = new Notification(req.body);
     socket.emit('notification', notify); // Updates Live Notification
     res.send(notify);
 });

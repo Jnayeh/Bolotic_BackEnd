@@ -15,6 +15,9 @@ const notificationSchema = new Schema(
             required: true,
             default: false
         },
+        date_creation: {
+            type: Date, default: Date.now
+        },
         to: {
             type: mongoose.Schema.Types.ObjectId
         },

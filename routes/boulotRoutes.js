@@ -34,7 +34,7 @@ router.get('/boulots', (req, res) => {
 
 router.get('/boulots/recruteur/:rec_id', auth, (req, res) => {
     const id = req.params.rec_id
-    Boulot.find({recruteur : id}).populate("recruteur")
+    Boulot.find({ recruteur: id }).populate("recruteur")
         .then((result) => {
             res.send(result)
         })
@@ -51,10 +51,10 @@ router.get('/boulot/:id', auth, (req, res) => {
     const id = req.params.id
     Boulot.findById(id).populate("recruteur")
         .then((result) => {
-            if(result){
+            if (result) {
                 res.send(result)
             }
-            else{
+            else {
                 res.status(400).send("BOULOT NOT FOUND");
             }
         })
@@ -117,7 +117,6 @@ router.put('/boulots/update/:id', auth, async (req, res) => {
     const old_boulot = await Boulot.findById(id);
     if (old_boulot) {
         _boulot._id = id;
-
         // The recruiter can never be changed but the category can   
 
         if (old_boulot.category != _boulot.category) {

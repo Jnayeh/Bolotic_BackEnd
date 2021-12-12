@@ -80,6 +80,11 @@ router.get('/avis/:id', auth, (req, res) => {
 // JSON
 
 router.post('/avis/add', auth, async (req, res) => {
+
+    if(req.body._id === null) {
+        delete req.body._id;
+      }
+
     const _avis = new Avis(req.body);
 
     //GET TOKEN FROM HEADERS
