@@ -23,6 +23,7 @@ const AvisRoutes = require('./routes/AvisRoutes');
 const ContratRoutes = require('./routes/ContratRoutes');
 const NotificationRoutes = require('./routes/NotificationRoutes');
 const SignalementRoutes = require('./routes/SignalementRoutes');
+const CarteBancaireRoutes = require('./routes/CarteBacaireRoutes');
 
 
 //Express App
@@ -94,6 +95,7 @@ app.use(EtudiantRoutes);
 app.use(NotificationRoutes);
 app.use(RecruteurRoutes);
 app.use(SignalementRoutes);
+app.use(CarteBancaireRoutes);
 
 // // //    ERRORS SHOULD ALWAYS BE AFTER EVERYTHING 
 app.use((req, res) => {
