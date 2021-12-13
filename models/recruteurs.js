@@ -70,7 +70,13 @@ const recruteurSchema = new Schema(
                 ref: "Notification"
               }
         ],
-        
+        //Many signalement reference 
+        signalements:[
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Signalement"
+              }
+        ]
     }
 );
 

@@ -66,6 +66,13 @@ const etudiantSchema = new Schema(
                 ref: "Contrat"
               }
         ],
+        //Many signalement reference 
+        signalements:[
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Signalement"
+              }
+        ]
     }
 );
 
