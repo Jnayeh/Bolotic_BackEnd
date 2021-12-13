@@ -9,6 +9,10 @@ const avisSchema = new Schema(
         to: {
             type: mongoose.Schema.Types.ObjectId
         },
+        //One contrat reference
+        contrat: {
+            type: mongoose.Schema.Types.ObjectId,
+        },
         //One recruteur reference
         recruteur: {
             type: mongoose.Schema.Types.ObjectId,
