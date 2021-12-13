@@ -22,6 +22,7 @@ const CategoryRoutes = require('./routes/CategoryRoutes');
 const AvisRoutes = require('./routes/AvisRoutes');
 const ContratRoutes = require('./routes/ContratRoutes');
 const NotificationRoutes = require('./routes/NotificationRoutes');
+const SignalementRoutes = require('./routes/SignalementRoutes');
 
 
 //Express App
@@ -92,6 +93,7 @@ app.use(ContratRoutes);
 app.use(EtudiantRoutes);
 app.use(NotificationRoutes);
 app.use(RecruteurRoutes);
+app.use(SignalementRoutes);
 
 // // //    ERRORS SHOULD ALWAYS BE AFTER EVERYTHING 
 app.use((req, res) => {

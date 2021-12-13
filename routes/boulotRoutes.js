@@ -1,6 +1,7 @@
 const express = require('express');
 
 const Boulot = require('../models/boulots');
+const Etudiant = require('../models/etudiants');
 const Recruteur = require('../models/recruteurs');
 const path = require("path");
 const auth = require("../middleware/auth");
@@ -49,7 +50,7 @@ router.get('/boulots/recruteur/:rec_id', auth, (req, res) => {
 
 router.get('/boulot/:id', auth, (req, res) => {
     const id = req.params.id
-    Boulot.findById(id).populate("recruteur")
+    Etudiant.findById(id).populate("recruteur")
         .then((result) => {
             if (result) {
                 res.send(result)
