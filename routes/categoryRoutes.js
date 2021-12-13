@@ -49,6 +49,11 @@ router.get('/categories/:id', auth, (req, res) => {
 // JSON
 
 router.post('/categories/add', (req, res) => {
+
+    if (req.body._id === null) {
+        delete req.body._id;
+    }
+
     const _category = new Category(req.body);
 
     //GET TOKEN FROM HEADERS

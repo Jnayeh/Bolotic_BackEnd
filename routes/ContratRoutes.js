@@ -34,7 +34,7 @@ router.get('/contrats', (req, res) => {
 
 router.get('/contrats/boulot/:boulot_id', auth, (req, res) => {
     const boulot_id = req.params.boulot_id
-    Contrat.find({boulot : boulot_id}).populate("etudiant")
+    Contrat.find({ boulot: boulot_id }).populate("etudiant")
         .then((result) => {
             res.send(result)
         })
@@ -64,31 +64,68 @@ router.get('/contrat/:id', auth, (req, res) => {
 // JSON
 
 router.post('/contrats/add', auth, async (req, res) => {
+
+    if (req.body._id === null) {
+        delete req.body._id;
+    }
+
     const _contrat = new Contrat(req.body);
 
-    
-    
     Contrat.create(_contrat).then(async (_contrat) => {
-            console.log("\n>> Created Contrat:\n", _contrat);
+        console.log("\n>> Created Contrat:\n", _contrat);
 
-            await Boulot.findByIdAndUpdate(
-                _contrat.boulot,
-                { $push: { contrats: _contrat._id } },
-                { new: true, useFindAndModify: false }
-            );
-            await Etudiant.findByIdAndUpdate(
-                _contrat.etudiant,
-                { $push: { contrats: _contrat._id } },
-                { new: true, useFindAndModify: false }
-            );
-            res.send(_contrat);
-        })
-            .catch((err) => {
-                res.status(400).send(err);
-            });
-    
+        await Boulot.findByIdAndUpdate(
+            _contrat.boulot,
+            { $push: { contrats: _contrat._id } },
+            { new: true, useFindAndModify: false }
+        );
+        await Etudiant.findByIdAndUpdate(
+            _contrat.etudiant,
+            { $push: { contrats: _contrat._id } },
+            { new: true, useFindAndModify: false }
+        );
+        res.send(_contrat);
+    })
+        .catch((err) => {
+            res.status(400).send(err);
+        });
+
 })
 
+//rejeter contrat
+router.put('/contrats/reject/:id', auth, async (req, res) => {
+    const id = req.params.id;
+
+
+    const old_contrat = await Contrat.findById(id);
+    if (old_contrat) {
+        _contrat._id = id;
+
+        await Contrat.findByIdAndUpdate(id, { status: 'rejected' });
+        res.send(await Contrat.findById(id));
+    }
+    else {
+        res.send("CONTRAT NOT FOUND");
+    }
+
+})
+
+//Accepter contrat
+router.put('/contrats/accept/:id', auth, async (req, res) => {
+    const id = req.params.id;
+
+    const old_contrat = await Contrat.findById(id);
+    if (old_contrat) {
+        _contrat._id = id;
+
+        await Contrat.findByIdAndUpdate(id, { status: 'accepted' });
+        res.send(await Contrat.findById(id));
+    }
+    else {
+        res.send("CONTRAT NOT FOUND");
+    }
+
+})
 
 // UPDATE CONTRAT
 // JSON

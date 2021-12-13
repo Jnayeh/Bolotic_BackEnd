@@ -78,7 +78,7 @@ router.post("/loginEtudiant", async (req, res) => {
             res.json(token);
         }
         else {
-            res.status(400).send({error:"Invalid Credentials"});
+            res.status(400).send({ error: "Invalid Credentials" });
         }
     }
     catch (err) {
@@ -90,6 +90,10 @@ router.post("/loginEtudiant", async (req, res) => {
 // FORM-DATA
 
 router.post('/registerEtudiant', async (req, res) => {
+
+    if (req.body.etudiant._id === null) {
+        delete req.body.etudiant._id;
+    }
 
     const _et = new Etudiant(JSON.parse(req.body.etudiant));
 
@@ -130,24 +134,21 @@ router.post('/registerEtudiant', async (req, res) => {
         Etudiant.create(_et)
             .then((result) => {
 
-                Etudiant.findOne({ email: result.email }).then(et => {
+                // CREATE TOKEN
+                const token = jwt.sign(
+                    {
+                        id: et._id,
+                        role: "etudiant"
+                    },
+                    process.env.TOKEN_KEY,
+                    {
+                        expiresIn: "24h",
+                    }
+                );
 
-                    // CREATE TOKEN
-                    const token = jwt.sign(
-                        {
-                            id: et._id,
-                            role: "etudiant"
-                        },
-                        process.env.TOKEN_KEY,
-                        {
-                            expiresIn: "24h",
-                        }
-                    );
+                // SAVE ETUDIANT TOKEN
+                res.json(token);
 
-                    // SAVE ETUDIANT TOKEN
-                    res.json(token);
-                })
-                
             })
             .catch((err) => {
                 res.send(err);

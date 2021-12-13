@@ -4,8 +4,7 @@ const contratSchema = new Schema(
     {
         status: {
             type: String,
-            required: true,
-            default: "non selected"
+            required: true
         },
         //One boulot reference
         boulot: {

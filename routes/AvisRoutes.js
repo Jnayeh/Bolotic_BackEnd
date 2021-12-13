@@ -29,13 +29,13 @@ router.get('/avis', (req, res) => {
         })
 })
 
-// GET AVIS BY ID
+// GET RECRUTEUR AVIS BY ID
 // JSON
 // AUTHENTIFICATION NEEDED
 
-router.get('/avis/recruteur/:id', auth, (req, res) => {
-    const id = req.params.id
-    Avis.find({ etudiant: id }).populate("etudiant")
+router.get('/avis/recruteur/:rec_id', auth, (req, res) => {
+    const id = req.params.rec_id
+    Avis.find({ to: id }).populate("etudiant")
         .then((result) => {
             res.send(result)
         })
@@ -44,13 +44,13 @@ router.get('/avis/recruteur/:id', auth, (req, res) => {
         })
 });
 
-// GET AVIS BY ID
+// GET ETUDIANT AVIS BY ID
 // JSON
 // AUTHENTIFICATION NEEDED
 
-router.get('/avis/etudiant/:id', auth, (req, res) => {
-    const id = req.params.id
-    Avis.find({ recruteur: id }).populate("recruteur")
+router.get('/avis/etudiant/:et_id', auth, (req, res) => {
+    const id = req.params.et_id
+    Avis.find({ to: id }).populate("recruteur","etudiant")
         .then((result) => {
             res.send(result)
         })
@@ -80,6 +80,11 @@ router.get('/avis/:id', auth, (req, res) => {
 // JSON
 
 router.post('/avis/add', auth, async (req, res) => {
+
+    if(req.body._id === null) {
+        delete req.body._id;
+      }
+
     const _avis = new Avis(req.body);
 
     //GET TOKEN FROM HEADERS

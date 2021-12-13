@@ -53,7 +53,7 @@ router.post("/loginRecruteur", async (req, res) => {
 
         // VALIDATE INPUT
         if (!(email && mot_de_passe)) {
-            res.status(400).send({error:"All input is required"});
+            res.status(400).send({ error: "All input is required" });
         }
 
         // VALIDATE RECRUITER
@@ -64,8 +64,10 @@ router.post("/loginRecruteur", async (req, res) => {
 
             // CREATE TOKEN
             const token = jwt.sign(
-                { id: _rec._id ,
-                role: "recruteur"},
+                {
+                    id: _rec._id,
+                    role: "recruteur"
+                },
                 process.env.TOKEN_KEY,
                 {
                     expiresIn: "24h",
@@ -76,8 +78,8 @@ router.post("/loginRecruteur", async (req, res) => {
             res.json(token);
         }
         else {
-            
-            res.status(400).send({error:"Invalid Credentials"});
+
+            res.status(400).send({ error: "Invalid Credentials" });
         }
     }
     catch (err) {
@@ -91,6 +93,10 @@ router.post("/loginRecruteur", async (req, res) => {
 
 router.post('/registerRecruteur', async (req, res) => {
 
+    if (req.body.recruteur._id === null) {
+        delete req.body.recruteur._id;
+    }
+
     const _rec = new Recruteur(JSON.parse(req.body.recruteur));
 
     // ENCRYPTING mot_de_passe
@@ -101,14 +107,14 @@ router.post('/registerRecruteur', async (req, res) => {
 
     // VALIDATE INPUT
     if (!(_rec.email && _rec.mot_de_passe && _rec.nom && _rec.prenom && _rec.num_tel)) {
-        res.status(400).send({error:"All input is required"});
+        res.status(400).send({ error: "All input is required" });
     }
 
     const oldRecruteur = await Recruteur.findOne({ email: _rec.email });
 
     if (oldRecruteur) {
-        
-        return res.status(409).send({error:"Recruteur Already Exist. Please Login"});
+
+        return res.status(409).send({ error: "Recruteur Already Exist. Please Login" });
     }
 
     else {
@@ -139,21 +145,20 @@ router.post('/registerRecruteur', async (req, res) => {
         Recruteur.create(_rec)
             .then((result) => {
 
-                Recruteur.findOne({ email: result.email }).then(rec => {
+                // CREATE TOKEN
+                const token = jwt.sign(
+                    {
+                        id: rec._id,
+                        role: "recruteur"
+                    },
+                    process.env.TOKEN_KEY,
+                    {
+                        expiresIn: "24h",
+                    }
+                );
 
-                    // CREATE TOKEN
-                    const token = jwt.sign(
-                        { id: rec._id,
-                        role: "recruteur"},
-                        process.env.TOKEN_KEY,
-                        {
-                            expiresIn: "24h",
-                        }
-                    );
-
-                    // SAVE RECRUITER TOKEN
-                    res.json(token);
-                })
+                // SAVE RECRUITER TOKEN
+                res.json(token);
 
             })
             .catch((err) => {
