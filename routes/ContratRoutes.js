@@ -99,7 +99,6 @@ router.put('/contrats/reject/:id', auth, async (req, res) => {
 
     const old_contrat = await Contrat.findById(id);
     if (old_contrat) {
-        _contrat._id = id;
 
         await Contrat.findByIdAndUpdate(id, { status: 'rejected' });
         res.send(await Contrat.findById(id));
@@ -116,7 +115,6 @@ router.put('/contrats/accept/:id', auth, async (req, res) => {
 
     const old_contrat = await Contrat.findById(id);
     if (old_contrat) {
-        _contrat._id = id;
 
         await Contrat.findByIdAndUpdate(id, { status: 'accepted' });
         res.send(await Contrat.findById(id));
