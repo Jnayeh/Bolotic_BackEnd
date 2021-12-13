@@ -28,7 +28,7 @@ const etudiantSchema = new Schema(
         suspended: {
             type: Boolean,
             default: false,
-            required: true
+            required: false
         },
         cin: {
             type: Number,
