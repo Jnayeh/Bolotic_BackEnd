@@ -25,7 +25,7 @@ router.get('/boulots', (req, res) => {
             res.send(result)
         })
         .catch((err) => {
-            res.send(err);
+            res.status(400).send(err);
         })
 })
 
@@ -40,7 +40,7 @@ router.get('/boulots/recruteur/:rec_id', auth, (req, res) => {
             res.send(result)
         })
         .catch((err) => {
-            res.send(err);
+            res.status(400).send(err);
         })
 });
 
@@ -50,7 +50,7 @@ router.get('/boulots/recruteur/:rec_id', auth, (req, res) => {
 
 router.get('/boulot/:id', auth, (req, res) => {
     const id = req.params.id
-    Etudiant.findById(id).populate("recruteur")
+    Boulot.findById(id).populate("recruteur")
         .then((result) => {
             if (result) {
                 res.send(result)
@@ -60,7 +60,7 @@ router.get('/boulot/:id', auth, (req, res) => {
             }
         })
         .catch((err) => {
-            res.send(err);
+            res.status(400).send(err);
         })
 });
 
