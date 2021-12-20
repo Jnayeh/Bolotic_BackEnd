@@ -46,11 +46,14 @@ router.get('/recruteur/:id', auth, (req, res) => {
 // JSON
 
 router.post("/loginRecruteur", async (req, res) => {
-    try {
+    
         // GET INPUT
-        const email = req.body.email.toLowerCase();
+        let email = req.body.email;
+        if(email){
+            email= email.toLowerCase()
+        }
         const mot_de_passe = req.body.mot_de_passe;
-
+        
         // VALIDATE INPUT
         if (!(email && mot_de_passe)) {
             res.status(400).send({ error: "All input is required" });
@@ -61,7 +64,7 @@ router.post("/loginRecruteur", async (req, res) => {
 
 
         if (_rec && (await bcrypt.compare(mot_de_passe, _rec.mot_de_passe))) {
-
+            console.log("heree");
             // CREATE TOKEN
             const token = jwt.sign(
                 {
@@ -81,11 +84,7 @@ router.post("/loginRecruteur", async (req, res) => {
 
             res.status(400).send({ error: "Invalid Credentials" });
         }
-    }
-    catch (err) {
-
-        res.send(err);
-    }
+    
 });
 
 // REGISTER RECRUITER
@@ -144,21 +143,27 @@ router.post('/registerRecruteur', async (req, res) => {
 
         Recruteur.create(_rec)
             .then((result) => {
+                Recruteur.findOne({ email: result.email }).then(et => {
 
-                // CREATE TOKEN
-                const token = jwt.sign(
-                    {
-                        id: rec._id,
-                        role: "recruteur"
-                    },
-                    process.env.TOKEN_KEY,
-                    {
-                        expiresIn: "24h",
-                    }
-                );
+                    // CREATE TOKEN
+                    const token = jwt.sign(
+                        {
+                            id: et._id,
+                            role: "etudiant"
+                        },
+                        process.env.TOKEN_KEY,
+                        {
+                            expiresIn: "24h",
+                        }
+                    );
 
-                // SAVE RECRUITER TOKEN
-                res.json(token);
+                    // SAVE RECRUITER TOKEN
+                    res.json(token);
+                })
+                .catch((err) => {
+                    res.send(err);
+                });
+                
 
             })
             .catch((err) => {

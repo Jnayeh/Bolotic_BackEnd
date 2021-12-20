@@ -46,11 +46,15 @@ router.get('/etudiant/:id', auth, (req, res) => {
 // JSON
 
 router.post("/loginEtudiant", async (req, res) => {
-    try {
+    
+        
+        
         // GET INPUT
-        const email = req.body.email.toLowerCase();
+        let email = req.body.email;
         const mot_de_passe = req.body.mot_de_passe;
-
+        if(email){
+            email= email.toLowerCase()
+        }
         // VALIDATE INPUT
         if (!(email && mot_de_passe)) {
             res.status(400).send("All input is required");
@@ -80,10 +84,7 @@ router.post("/loginEtudiant", async (req, res) => {
         else {
             res.status(400).send({ error: "Invalid Credentials" });
         }
-    }
-    catch (err) {
-        res.send(err);
-    }
+    
 });
 
 // REGISTER ETUDIANT
@@ -108,7 +109,7 @@ router.post('/registerEtudiant', async (req, res) => {
     const oldEtudiant = await Etudiant.findOne({ email: _et.email });
 
     if (oldEtudiant) {
-        return res.status(409).send("Etudiant Already Exist. Please Login");
+        return res.status(409).send({ error: "Recruteur Already Exist. Please Login" });
     }
 
     else {
@@ -133,21 +134,27 @@ router.post('/registerEtudiant', async (req, res) => {
 
         Etudiant.create(_et)
             .then((result) => {
+                console.log('here');
+                Etudiant.findOne({ email: result.email }).then(et => {
 
-                // CREATE TOKEN
-                const token = jwt.sign(
-                    {
-                        id: et._id,
-                        role: "etudiant"
-                    },
-                    process.env.TOKEN_KEY,
-                    {
-                        expiresIn: "24h",
-                    }
-                );
+                    // CREATE TOKEN
+                    const token = jwt.sign(
+                        {
+                            id: et._id,
+                            role: "etudiant"
+                        },
+                        process.env.TOKEN_KEY,
+                        {
+                            expiresIn: "24h",
+                        }
+                    );
 
-                // SAVE ETUDIANT TOKEN
-                res.json(token);
+                    // SAVE RECRUITER TOKEN
+                    res.json(token);
+                })
+                .catch((err) => {
+                    res.send(err);
+                });
 
             })
             .catch((err) => {
