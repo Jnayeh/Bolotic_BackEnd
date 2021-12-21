@@ -8,10 +8,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "heroku"
+    "node",
+    "heroku",
+    "express"
   ],
+  "license": "MIT",
   "author": "",
-  "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
