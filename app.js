@@ -19,6 +19,7 @@ var https = require("https");
 const EtudiantRoutes = require('./routes/EtudiantRoutes');
 const RecruteurRoutes = require('./routes/RecruteurRoutes');
 const AdministrateurRoutes = require('./routes/AdminRoutes');
+const BoulotRoutes = require('./routes/BoulotRoutes');
 const CategoryRoutes = require('./routes/CategoryRoutes');
 const AvisRoutes = require('./routes/AvisRoutes');
 const ContratRoutes = require('./routes/ContratRoutes');
@@ -92,9 +93,7 @@ app.use('/logos', express.static(path.join(__dirname, 'logos')))
 //ADMIN PHOTOS
 app.use('/admin', express.static(path.join(__dirname, 'admin_files')))
 
-app.use('/',(req, res) =>{
-  res.send("<h1>Hello</h1>");
-})
+
 
 //     LOGS
 app.use(morgan('dev'));
@@ -102,6 +101,7 @@ app.use(morgan('dev'));
 //       USE ROUTES
 app.use(AdministrateurRoutes);
 app.use(AvisRoutes);
+app.use(BoulotRoutes);
 app.use(CategoryRoutes);
 app.use(ContratRoutes);
 app.use(EtudiantRoutes);
@@ -111,7 +111,9 @@ app.use(SignalementRoutes);
 app.use(CarteBancaireRoutes);
 
 // // //    ERRORS SHOULD ALWAYS BE AFTER EVERYTHING 
-
+app.use('/',(req, res) =>{
+  res.send("<h1>Hello</h1>");
+})
 app.use((req, res) => {
     res.status(404).send({
         error: {
