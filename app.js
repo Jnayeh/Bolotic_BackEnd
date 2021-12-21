@@ -113,7 +113,7 @@ app.use(CarteBancaireRoutes);
 
 // // //    ERRORS SHOULD ALWAYS BE AFTER EVERYTHING 
 app.use('/',(req, res) =>{
-  res.send("Hello");
+  res.send("<h1>Hello</h1>");
 })
 app.use((req, res) => {
     res.status(404).send({
