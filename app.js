@@ -93,7 +93,9 @@ app.use('/logos', express.static(path.join(__dirname, 'logos')))
 //ADMIN PHOTOS
 app.use('/admin', express.static(path.join(__dirname, 'admin_files')))
 
-
+app.use('/',(req, res) =>{
+  res.send("<h1>Hello</h1>");
+})
 
 //     LOGS
 app.use(morgan('dev'));
@@ -111,9 +113,7 @@ app.use(SignalementRoutes);
 app.use(CarteBancaireRoutes);
 
 // // //    ERRORS SHOULD ALWAYS BE AFTER EVERYTHING 
-app.use('/',(req, res) =>{
-  res.send("<h1>Hello</h1>");
-})
+
 app.use((req, res) => {
     res.status(404).send({
         error: {
