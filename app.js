@@ -11,6 +11,8 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
+
+var fs = require("fs");
 var https = require("https");
 
 
@@ -41,7 +43,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Socket server
-const httpServer = createServer(app);
+const httpServer = https.createServer({
+    key: fs.readFileSync("server.key"),
+    cert: fs.readFileSync("server.cert"),
+  },app);
 // Socket Layer over Http Server
 const socket = new Server(httpServer,{
     cors: {
