@@ -32,19 +32,20 @@ const CarteBancaireRoutes = require('./routes/CarteBacaireRoutes');
 //Express App
 const app = express();
 
-// enable files upload
-app.use(fileUpload({
-    createParentPath: true
-}));
-
-//add other middleware
+// CORS
 const corsOptions ={
   origin: "https://jnayeh.github.io", 
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
 app.use(cors(corsOptions));
-app.use(allowCrossDomain)
+
+// enable files upload
+app.use(fileUpload({
+    createParentPath: true
+}));
+
+//add other middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
