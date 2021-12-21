@@ -11,6 +11,7 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
+var https = require("https");
 
 
 //Routes
@@ -55,7 +56,10 @@ socket.on('connection', socket => {
 //Listen to port
 
 
-httpServer.listen(process.env.PORT || 3000);
+httpServer.listen(process.env.PORT || 3000, function(){
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+  });
+   
 
 
 
