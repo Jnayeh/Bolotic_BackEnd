@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 //    MongoDB URL
-const url = 'mongodb://127.0.0.1:27017/BoloticDB';
+const url = "mongodb+srv://root:1001@boloticdb.g5x5o.mongodb.net/boloticDB?retryWrites=true&w=majority";
 
 exports.connect = () => {
     // CONNECT MONGOOSE

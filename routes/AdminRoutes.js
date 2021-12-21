@@ -90,7 +90,7 @@ router.post("/loginAdmin", async (req, res) => {
 router.post('/admins/add', async (req, res) => {
     
 
-    const _admin = new Administrateur(JSON.parse(req.body));
+    const _admin = new Administrateur(req.body);
 
     // ENCRYPTING mot_de_passe
     _admin.mot_de_passe = await bcrypt.hash(_admin.mot_de_passe, 10);
