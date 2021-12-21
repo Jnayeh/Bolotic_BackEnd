@@ -46,6 +46,9 @@ app.use(express.urlencoded({ extended: true }));
 const httpServer = https.createServer({
     key: fs.readFileSync("server.key"),
     cert: fs.readFileSync("server.cert"),
+    cors: {
+        origin: ["https://jnayeh.github.io"]
+      }
   },app);
 // Socket Layer over Http Server
 const socket = new Server(httpServer,{
