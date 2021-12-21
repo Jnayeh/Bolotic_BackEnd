@@ -50,7 +50,7 @@ const httpServer = https.createServer({
 // Socket Layer over Http Server
 const socket = new Server(httpServer,{
     cors: {
-      origin: ["http://localhost:4200"]
+      origin: ["https://jnayeh.github.io/Bolotic_FrontEnd/"]
     }
   });
 // On every Client Connection
