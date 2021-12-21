@@ -19,7 +19,6 @@ var https = require("https");
 const EtudiantRoutes = require('./routes/EtudiantRoutes');
 const RecruteurRoutes = require('./routes/RecruteurRoutes');
 const AdministrateurRoutes = require('./routes/AdminRoutes');
-const BoulotRoutes = require('./routes/BoulotRoutes');
 const CategoryRoutes = require('./routes/CategoryRoutes');
 const AvisRoutes = require('./routes/AvisRoutes');
 const ContratRoutes = require('./routes/ContratRoutes');
@@ -103,7 +102,6 @@ app.use(morgan('dev'));
 //       USE ROUTES
 app.use(AdministrateurRoutes);
 app.use(AvisRoutes);
-app.use(BoulotRoutes);
 app.use(CategoryRoutes);
 app.use(ContratRoutes);
 app.use(EtudiantRoutes);
