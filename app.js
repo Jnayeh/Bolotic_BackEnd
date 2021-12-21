@@ -15,7 +15,6 @@ const _ = require('lodash');
 var fs = require("fs");
 var https = require("https");
 
-
 //Routes
 const EtudiantRoutes = require('./routes/EtudiantRoutes');
 const RecruteurRoutes = require('./routes/RecruteurRoutes');
